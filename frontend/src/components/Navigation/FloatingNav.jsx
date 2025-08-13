@@ -17,13 +17,14 @@ import {
 } from 'lucide-react';
 import './FloatingNav.css';
 import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 
 const FloatingNav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const [dropdownTimeout, setDropdownTimeout] = useState(null);
   const { isDark, toggleTheme } = useTheme();
+  const { user, isLoggedIn, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,32 +35,32 @@ const FloatingNav = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    return () => {
-      if (dropdownTimeout) {
-        clearTimeout(dropdownTimeout);
-      }
-    };
-  }, [dropdownTimeout]);
 
-  const handleMouseEnter = (index) => {
-    if (dropdownTimeout) {
-      clearTimeout(dropdownTimeout);
-      setDropdownTimeout(null);
-    }
-    setActiveDropdown(index);
-  };
-
-  const handleMouseLeave = () => {
-    const timeout = setTimeout(() => {
-      setActiveDropdown(null);
-    }, 300); // 300ms delay before hiding
-    setDropdownTimeout(timeout);
-  };
 
   const handleDropdownToggle = (index) => {
     setActiveDropdown(activeDropdown === index ? null : index);
   };
+
+  const handleDropdownClick = (index, event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setActiveDropdown(activeDropdown === index ? null : index);
+  };
+
+  const handleClickOutside = (event) => {
+    // Close dropdown when clicking outside
+    if (!event.target.closest('.nav-item-wrapper') && !event.target.closest('.user-menu')) {
+      setActiveDropdown(null);
+    }
+  };
+
+  // Add click outside listener
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   const isDarkMode = isDark;
 
@@ -175,11 +176,13 @@ const FloatingNav = () => {
             <motion.div 
               key={index} 
               className="nav-item-wrapper"
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
               whileHover={{ y: -2 }}
             >
-              <Link to={item.path} className="nav-item">
+              <div 
+                className={`nav-item ${activeDropdown === index ? 'active' : ''}`}
+                onClick={(e) => handleDropdownClick(index, e)}
+                style={{ cursor: 'pointer' }}
+              >
                 {item.icon}
                 <span>{item.title}</span>
                 <motion.div
@@ -188,7 +191,7 @@ const FloatingNav = () => {
                 >
                   <ChevronDown size={14} className="dropdown-arrow" />
                 </motion.div>
-              </Link>
+              </div>
               
               <AnimatePresence>
                 {activeDropdown === index && (
@@ -221,6 +224,73 @@ const FloatingNav = () => {
               </AnimatePresence>
             </motion.div>
           ))}
+          
+          {/* User Menu / Auth */}
+          {isLoggedIn ? (
+            <motion.div 
+              className="user-menu"
+              whileHover={{ y: -2 }}
+            >
+              <div 
+                className={`user-button ${activeDropdown === 'user' ? 'active' : ''}`}
+                onClick={(e) => handleDropdownClick('user', e)}
+                style={{ cursor: 'pointer' }}
+              >
+                <User size={18} />
+                <span>{user?.name || 'User'}</span>
+                <motion.div
+                  animate={{ rotate: activeDropdown === 'user' ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ChevronDown size={14} className="dropdown-arrow" />
+                </motion.div>
+              </div>
+              
+              <AnimatePresence>
+                {activeDropdown === 'user' && (
+                  <motion.div 
+                    className="dropdown-menu user-dropdown"
+                    variants={dropdownVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                  >
+                    <motion.div variants={itemVariants} initial="hidden" animate="visible">
+                      <Link to="/account/profile" className="dropdown-item">
+                        <User size={16} />
+                        <span>Profile</span>
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants} initial="hidden" animate="visible" transition={{ delay: 0.1 }}>
+                      <Link to="/account/settings" className="dropdown-item">
+                        <Settings size={16} />
+                        <span>Settings</span>
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants} initial="hidden" animate="visible" transition={{ delay: 0.2 }}>
+                      <button 
+                        className="dropdown-item logout-item"
+                        onClick={logout}
+                      >
+                        <User size={16} />
+                        <span>Logout</span>
+                      </button>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ) : (
+            <motion.button 
+              className="auth-button"
+              onClick={() => window.location.href = '/auth'}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <User size={18} />
+              <span>Login</span>
+            </motion.button>
+          )}
           
           {/* Theme Toggle */}
           <motion.button 

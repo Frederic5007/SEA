@@ -25,6 +25,15 @@
   --shadow-light-dark: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
   --shadow-medium-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
   --shadow-heavy-dark: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  
+  /* CTA Button Colors */
+  --cta-primary-bg: linear-gradient(135deg, #fbbf24, #f59e0b);
+  --cta-primary-shadow: rgba(251, 191, 36, 0.3);
+  --cta-primary-shadow-hover: rgba(251, 191, 36, 0.4);
+  --cta-secondary-bg: rgba(255, 255, 255, 0.1);
+  --cta-secondary-border: rgba(255, 255, 255, 0.3);
+  --cta-secondary-hover-bg: rgba(255, 255, 255, 0.2);
+  --cta-secondary-hover-border: rgba(255, 255, 255, 0.5);
 }
 
 /* Light Mode Theme */
@@ -53,6 +62,15 @@
   --shadow-light: var(--shadow-light-dark);
   --shadow-medium: var(--shadow-medium-dark);
   --shadow-heavy: var(--shadow-heavy-dark);
+  
+  /* CTA Button Colors - Dark Mode */
+  --cta-primary-bg: linear-gradient(135deg, #fbbf24, #f59e0b);
+  --cta-primary-shadow: rgba(251, 191, 36, 0.3);
+  --cta-primary-shadow-hover: rgba(251, 191, 36, 0.4);
+  --cta-secondary-bg: rgba(255, 255, 255, 0.1);
+  --cta-secondary-border: rgba(255, 255, 255, 0.3);
+  --cta-secondary-hover-bg: rgba(255, 255, 255, 0.2);
+  --cta-secondary-hover-border: rgba(255, 255, 255, 0.5);
 }
 .homepage {
   min-height: 100vh;
@@ -124,7 +142,7 @@
 }
 
 .cta-primary {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  background: var(--cta-primary-bg);
   color: white;
   border: none;
   padding: 16px 32px;
@@ -136,18 +154,18 @@
   align-items: center;
   gap: 8px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(251, 191, 36, 0.3);
+  box-shadow: 0 4px 20px var(--cta-primary-shadow);
 }
 
 .cta-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(251, 191, 36, 0.4);
+  box-shadow: 0 8px 30px var(--cta-primary-shadow-hover);
 }
 
 .cta-secondary {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--cta-secondary-bg);
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid var(--cta-secondary-border);
   padding: 14px 32px;
   border-radius: 12px;
   font-weight: 600;
@@ -158,8 +176,8 @@
 }
 
 .cta-secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--cta-secondary-hover-bg);
+  border-color: var(--cta-secondary-hover-border);
   transform: translateY(-2px);
 }
 
@@ -170,12 +188,12 @@
 }
 
 .hero-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--bg-card);
   backdrop-filter: blur(20px);
   border-radius: 20px;
   padding: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-heavy);
+  border: 1px solid var(--border-color);
   max-width: 300px;
   width: 100%;
   animation: float 6s ease-in-out infinite;
@@ -191,12 +209,12 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
-  color: #1e40af;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
 .card-icon {
-  color: #3b82f6;
+  color: var(--text-accent);
 }
 
 .card-content {
@@ -212,12 +230,12 @@
   display: block;
   font-size: 2.5rem;
   font-weight: 800;
-  color: #059669;
+  color: var(--text-accent);
   line-height: 1;
 }
 
 .label {
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   margin-top: 4px;
 }
@@ -454,7 +472,7 @@
 
 /* CTA Section */
 .cta-section {
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  background: linear-gradient(135deg, var(--bg-secondary-dark) 0%, var(--bg-card-dark) 100%);
   padding: 100px 0;
   position: relative;
   overflow: hidden;
@@ -508,7 +526,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #fbbf24;
+  color: var(--text-accent);
   font-weight: 500;
 }
 

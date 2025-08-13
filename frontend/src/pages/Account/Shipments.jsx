@@ -66,8 +66,19 @@ const Shipments = () => {
                 <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-secondary)' }}>
                   <Clock size={16} /> ETA: <span style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{s.eta}</span>
                 </div>
-                <div style={{ marginTop: 12, height: 8, background: 'var(--border-color)', borderRadius: 999 }}>
-                  <div style={{ width: `${s.progress}%`, height: '100%', borderRadius: 999, background: `linear-gradient(135deg, ${meta.color}, var(--text-muted))` }} />
+                <div style={{ 
+                  marginTop: 12, 
+                  height: 8, 
+                  background: 'var(--text-muted)', 
+                  borderRadius: 999,
+                  opacity: 0.3
+                }}>
+                  <div style={{ 
+                    width: `${s.progress}%`, 
+                    height: '100%', 
+                    borderRadius: 999, 
+                    background: `linear-gradient(135deg, ${meta.color}, ${meta.color}dd)` 
+                  }} />
                 </div>
               </motion.div>
             );

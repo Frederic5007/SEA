@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
-import { CalendarDays, Mail, UserCircle2 } from 'lucide-react';
+import { CalendarDays, Mail, UserCircle2, LogOut } from 'lucide-react';
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   if (!user) {
     return (
@@ -84,11 +84,51 @@ const Profile = () => {
                 <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Member since</div>
                 <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{joined}</div>
               </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </div>
+                         </div>
+           </div>
+           
+           {/* Logout Button */}
+           <motion.div 
+             initial={{ opacity: 0, y: 20 }} 
+             animate={{ opacity: 1, y: 0 }} 
+             transition={{ duration: 0.4, delay: 0.2 }}
+             style={{ marginTop: 24 }}
+           >
+             <button 
+               onClick={logout}
+               style={{
+                 width: '100%',
+                 padding: '12px 24px',
+                 background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                 color: 'white',
+                 border: 'none',
+                 borderRadius: '12px',
+                 fontWeight: '600',
+                 fontSize: '1rem',
+                 cursor: 'pointer',
+                 display: 'flex',
+                 alignItems: 'center',
+                 justifyContent: 'center',
+                 gap: '8px',
+                 transition: 'all 0.2s ease',
+                 boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)'
+               }}
+               onMouseEnter={(e) => {
+                 e.target.style.transform = 'translateY(-2px)';
+                 e.target.style.boxShadow = '0 6px 16px rgba(239, 68, 68, 0.4)';
+               }}
+               onMouseLeave={(e) => {
+                 e.target.style.transform = 'translateY(0)';
+                 e.target.style.boxShadow = '0 4px 12px rgba(239, 68, 68, 0.3)';
+               }}
+             >
+               <LogOut size={18} />
+               Logout
+             </button>
+           </motion.div>
+         </motion.div>
+       </div>
+     </div>
   );
 };
 

@@ -1,7 +1,80 @@
+/* CSS Custom Properties for Auth Modal Theme Support */
+:root {
+  /* Light Mode Colors */
+  --auth-backdrop-bg: rgba(0, 0, 0, 0.4);
+  --auth-modal-bg: radial-gradient(1200px 400px at 10% -20%, rgba(59,130,246,0.08), transparent),
+                   radial-gradient(1000px 380px at 110% 0%, rgba(124,58,237,0.06), transparent),
+                   white;
+  --auth-modal-border: rgba(0,0,0,0.06);
+  --auth-title-color: #0f172a;
+  --auth-subtitle-color: #64748b;
+  --auth-tab-bg: #f1f5f9;
+  --auth-tab-color: #0f172a;
+  --auth-tab-active-bg: #eef2ff;
+  --auth-tab-active-color: #1e293b;
+  --auth-close-color: #334155;
+  --social-btn-bg: white;
+  --social-btn-border: #e2e8f0;
+  --social-btn-color: #0f172a;
+  --divider-color: #94a3b8;
+  --divider-line: #e2e8f0;
+  --form-label-color: #334155;
+  --form-input-bg: #f8fafc;
+  --form-input-border: #e2e8f0;
+  --form-input-focus-border: #93c5fd;
+  --form-input-focus-bg: white;
+  --form-input-focus-shadow: rgba(59, 130, 246, 0.15);
+  --input-icon-color: #94a3b8;
+  --password-toggle-color: #64748b;
+  --checkbox-color: #475569;
+  --link-button-color: #3b82f6;
+  --auth-hint-color: #64748b;
+  --password-success-color: #10b981;
+  --password-error-color: #ef4444;
+  --password-success-bg: rgba(16, 185, 129, 0.1);
+  --password-error-bg: rgba(239, 68, 68, 0.1);
+}
+
+/* Dark Mode Theme */
+[data-theme="dark"] {
+  --auth-backdrop-bg: rgba(0, 0, 0, 0.6);
+  --auth-modal-bg: radial-gradient(1200px 400px at 10% -20%, rgba(59,130,246,0.12), transparent),
+                   radial-gradient(1000px 380px at 110% 0%, rgba(124,58,237,0.1), transparent),
+                   #1e293b;
+  --auth-modal-border: rgba(255,255,255,0.1);
+  --auth-title-color: #f1f5f9;
+  --auth-subtitle-color: #cbd5e1;
+  --auth-tab-bg: #334155;
+  --auth-tab-color: #e2e8f0;
+  --auth-tab-active-bg: #475569;
+  --auth-tab-active-color: #f8fafc;
+  --auth-close-color: #cbd5e1;
+  --social-btn-bg: #334155;
+  --social-btn-border: #475569;
+  --social-btn-color: #e2e8f0;
+  --divider-color: #94a3b8;
+  --divider-line: #475569;
+  --form-label-color: #cbd5e1;
+  --form-input-bg: #334155;
+  --form-input-border: #475569;
+  --form-input-focus-border: #60a5fa;
+  --form-input-focus-bg: #475569;
+  --form-input-focus-shadow: rgba(96, 165, 250, 0.2);
+  --input-icon-color: #94a3b8;
+  --password-toggle-color: #94a3b8;
+  --checkbox-color: #cbd5e1;
+  --link-button-color: #60a5fa;
+  --auth-hint-color: #94a3b8;
+  --password-success-color: #10b981;
+  --password-error-color: #ef4444;
+  --password-success-bg: rgba(16, 185, 129, 0.15);
+  --password-error-bg: rgba(239, 68, 68, 0.15);
+}
+
 .auth-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--auth-backdrop-bg);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -12,12 +85,10 @@
 .auth-modal {
   width: 100%;
   max-width: 480px;
-  background: radial-gradient(1200px 400px at 10% -20%, rgba(59,130,246,0.08), transparent),
-              radial-gradient(1000px 380px at 110% 0%, rgba(124,58,237,0.06), transparent),
-              white;
+  background: var(--auth-modal-bg);
   border-radius: 20px;
   box-shadow: 0 30px 80px rgba(0,0,0,0.25);
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid var(--auth-modal-border);
   position: relative;
   overflow: hidden;
 }
@@ -58,12 +129,12 @@
 .auth-title {
   margin: 0;
   font-size: 1.15rem;
-  color: #0f172a;
+  color: var(--auth-title-color);
 }
 .auth-subtitle {
   margin: 0;
   font-size: 0.9rem;
-  color: #64748b;
+  color: var(--auth-subtitle-color);
 }
 
 .auth-tabs {
@@ -78,15 +149,15 @@
   padding: 12px 14px 16px;
   border-radius: 12px;
   border: none;
-  background: #f1f5f9;
-  color: #0f172a;
+  background: var(--auth-tab-bg);
+  color: var(--auth-tab-color);
   font-weight: 700;
   cursor: pointer;
 }
 
 .auth-tab.active {
-  background: #eef2ff;
-  color: #1e293b;
+  background: var(--auth-tab-active-bg);
+  color: var(--auth-tab-active-color);
 }
 
 .tab-underline {
@@ -102,7 +173,7 @@
 .auth-close {
   background: transparent;
   border: none;
-  color: #334155;
+  color: var(--auth-close-color);
   cursor: pointer;
   padding: 8px;
   border-radius: 8px;
@@ -125,9 +196,9 @@
   gap: 10px;
   padding: 10px 12px;
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  background: white;
-  color: #0f172a;
+  border: 1px solid var(--social-btn-border);
+  background: var(--social-btn-bg);
+  color: var(--social-btn-color);
   font-weight: 600;
   cursor: pointer;
 }
@@ -142,7 +213,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #94a3b8;
+  color: var(--divider-color);
   font-weight: 600;
   font-size: 0.85rem;
   margin: 14px 0 6px;
@@ -152,7 +223,7 @@
   content: "";
   height: 1px;
   flex: 1;
-  background: #e2e8f0;
+  background: var(--divider-line);
 }
 
 .auth-form {
@@ -170,22 +241,23 @@
 
 .form-field label {
   font-size: 0.9rem;
-  color: #334155;
+  color: var(--form-label-color);
   font-weight: 600;
 }
 
 .form-field input {
   padding: 12px 14px;
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border: 1px solid var(--form-input-border);
+  background: var(--form-input-bg);
   outline: none;
+  color: var(--text-primary);
 }
 
 .form-field input:focus {
-  border-color: #93c5fd;
-  background: white;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  border-color: var(--form-input-focus-border);
+  background: var(--form-input-focus-bg);
+  box-shadow: 0 0 0 4px var(--form-input-focus-shadow);
 }
 
 .input-group {
@@ -195,7 +267,7 @@
   position: absolute;
   left: 12px;
   bottom: 10px;
-  color: #94a3b8;
+  color: var(--input-icon-color);
 }
 .input-group input {
   padding-left: 36px;
@@ -203,13 +275,15 @@
 .password-toggle {
   position: absolute;
   right: 8px;
-  bottom: 8px;
+  top: 50%;
+  transform: translateY(-50%);
   background: transparent;
   border: none;
-  color: #64748b;
+  color: var(--password-toggle-color);
   cursor: pointer;
   padding: 6px;
   border-radius: 8px;
+  z-index: 2;
 }
 
 .form-row {
@@ -222,13 +296,13 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #475569;
+  color: var(--checkbox-color);
 }
 
 .link-button {
   background: transparent;
   border: none;
-  color: #3b82f6;
+  color: var(--link-button-color);
   cursor: pointer;
 }
 
@@ -241,12 +315,106 @@
   font-weight: 700;
   background: linear-gradient(135deg, #2563eb, #7c3aed);
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auth-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+}
+
+.auth-submit:disabled {
+  background: linear-gradient(135deg, #94a3b8, #cbd5e1);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.7;
 }
 
 .auth-hint {
   margin-top: 6px;
   font-size: 0.85rem;
-  color: #64748b;
+  color: var(--auth-hint-color);
+}
+
+/* Password validation styles */
+.password-success {
+  border-color: var(--password-success-color) !important;
+  background: var(--password-success-bg) !important;
+}
+
+.password-error {
+  border-color: var(--password-error-color) !important;
+  background: var(--password-error-bg) !important;
+}
+
+.password-success:focus {
+  border-color: var(--password-success-color) !important;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15) !important;
+}
+
+.password-error:focus {
+  border-color: var(--password-error-color) !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important;
+}
+
+/* Ensure input group maintains proper height */
+.input-group {
+  min-height: 80px;
+  margin-bottom: 24px;
+}
+
+/* Error message styling */
+.auth-error {
+  position: relative;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-align: center;
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* Success checkmark animation */
+@keyframes checkmarkAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+.password-success-indicator {
+  animation: checkmarkAppear 0.3s ease-out;
+}
+
+/* Password strength indicator */
+.password-strength {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--form-label-color);
+  z-index: 1;
+}
+
+.password-strength.weak {
+  color: var(--password-error-color);
+}
+
+.password-strength.medium {
+  color: #f59e0b;
+}
+
+.password-strength.strong {
+  color: var(--password-success-color);
 }
 
 

@@ -158,12 +158,18 @@
   transition: all 0.2s ease;
   position: relative;
   white-space: nowrap;
+  user-select: none;
 }
 
 .nav-item:hover {
   background: var(--hover-bg);
   color: var(--text-accent);
   transform: translateY(-1px);
+}
+
+.nav-item.active {
+  background: var(--hover-bg);
+  color: var(--text-accent);
 }
 
 .dropdown-arrow {
@@ -185,24 +191,7 @@
   padding: 8px;
   min-width: 200px;
   margin-top: 12px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1001;
-  pointer-events: none;
-}
-
-.nav-item-wrapper:hover .dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  pointer-events: auto;
-  transition-delay: 0.1s;
-}
-
-.nav-item-wrapper .dropdown-menu {
-  transition-delay: 0.2s;
 }
 
 .dropdown-item {
@@ -404,5 +393,83 @@
   .logo-icon {
     width: 24px;
     height: 24px;
+  }
+}
+
+/* User Menu Styles */
+.user-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.user-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--hover-bg);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border);
+}
+
+.user-button:hover {
+  background: var(--hover-bg-dropdown);
+  transform: translateY(-1px);
+}
+
+.user-button.active {
+  background: var(--hover-bg-dropdown);
+  color: var(--text-accent);
+}
+
+.user-dropdown {
+  right: 0;
+  min-width: 180px;
+}
+
+.logout-item {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  color: #dc2626;
+}
+
+.logout-item:hover {
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+}
+
+/* Auth Button Styles */
+.auth-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auth-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .user-menu,
+  .auth-button {
+    display: none;
   }
 }

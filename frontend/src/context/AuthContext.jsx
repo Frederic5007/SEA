@@ -1,21 +1,34 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import apiService from '../services/api';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  // Check for existing token and verify it on app start
   useEffect(() => {
-    const stored = localStorage.getItem('sea_auth_user');
-    if (stored) {
+    const initializeAuth = async () => {
       try {
-        setUser(JSON.parse(stored));
-      } catch {
-        // ignore parse errors
+        if (apiService.isAuthenticated()) {
+          const { user } = await apiService.getProfile();
+          setUser(user);
+        }
+      } catch (error) {
+        console.error('Auth initialization error:', error);
+        // Clear invalid tokens
+        localStorage.removeItem('sea_auth_token');
+        localStorage.removeItem('sea_auth_user');
+      } finally {
+        setLoading(false);
       }
-    }
+    };
+
+    initializeAuth();
   }, []);
 
+  // Store user in localStorage when it changes
   useEffect(() => {
     if (user) {
       localStorage.setItem('sea_auth_user', JSON.stringify(user));
@@ -27,17 +40,67 @@ export function AuthProvider({ children }) {
   const value = useMemo(() => ({
     user,
     isLoggedIn: Boolean(user),
-    login: ({ name, email }) => {
-      const profile = {
-        id: crypto.randomUUID(),
-        name: name || 'SEA User',
-        email,
-        joinedAt: new Date().toISOString(),
-      };
-      setUser(profile);
+    loading,
+    login: async (credentials) => {
+      try {
+        const { user: userData } = await apiService.login(credentials);
+        setUser(userData);
+        return { success: true, user: userData };
+      } catch (error) {
+        console.error('Login error:', error);
+        return { success: false, error: error.message };
+      }
     },
-    logout: () => setUser(null),
-  }), [user]);
+    register: async (userData) => {
+      try {
+        const { user: newUser } = await apiService.register(userData);
+        setUser(newUser);
+        return { success: true, user: newUser };
+      } catch (error) {
+        console.error('Registration error:', error);
+        return { success: false, error: error.message };
+      }
+    },
+    logout: async () => {
+      try {
+        await apiService.logout();
+      } catch (error) {
+        console.error('Logout error:', error);
+      } finally {
+        setUser(null);
+      }
+    },
+    updateProfile: async (profileData) => {
+      try {
+        const { user: updatedUser } = await apiService.updateProfile(profileData);
+        setUser(updatedUser);
+        return { success: true };
+      } catch (error) {
+        console.error('Profile update error:', error);
+        return { success: false, error: error.message };
+      }
+    },
+    googleAuth: async (accessToken) => {
+      try {
+        const { user: userData } = await apiService.googleAuth(accessToken);
+        setUser(userData);
+        return { success: true, user: userData };
+      } catch (error) {
+        console.error('Google auth error:', error);
+        return { success: false, error: error.message };
+      }
+    },
+    facebookAuth: async (accessToken) => {
+      try {
+        const { user: userData } = await apiService.facebookAuth(accessToken);
+        setUser(userData);
+        return { success: true, user: userData };
+      } catch (error) {
+        console.error('Facebook auth error:', error);
+        return { success: false, error: error.message };
+      }
+    }
+  }), [user, loading]);
 
   return (
     <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
